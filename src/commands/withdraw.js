@@ -5,7 +5,8 @@ const bot = new Telegraf(env.bot_token);
 const Comp = new Composer()
 const { starter } = require('../functions/starter');
 const { adminId, findUser, sendError, mustJoin, isNumeric, curr } = require("../functions/misc.js");
-
+const { enter, leave } = Scenes.Stage;
+const getWallet = new Scenes.BaseScene("getWallet");
 const { db } = require("../functions/mongoClient");
 function sleep(m) {
   return new Promise((r) => setTimeout(r, m));
@@ -20,16 +21,16 @@ Comp.hears('💲Withdraw', async (ctx) => {
 🔄Exchange Point to ~
 👉Netflix Account [5 Point ].
 👉Netflix On Mail Account [ 25 Point ].
-👉Prime On mail Account [ 15 Point ].</b>`, { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Netflix", callback_data: "/Nf instant" }],[{text: "Netflix on Mail", callback_data: "/NF mail" }]] } }
+👉Prime On mail Account [ 15 Point ].</b>`, { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Netflix", callback_data: "/Nf instant" }],[{text: "Netflix on Mail", callback_data: "/Nf mail" }]] } }
   )
 })
-Comp.action(/./Nf/, ctx => {
-var params = ctx.message.text.split(' ')[1]
+Comp.action(/^\/Nf/, ctx => {
+var params = ctx.update.callback_query.data.split(' ')[1]
   ctx.editMessageText(`<b>🎁For Exchange Points to Account :-
 🖲Please Click on Comfirm</b>`, { chat_id: ctx.chat.id, message_id: ctx.callbackQuery.message.message_id, parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Confirm", callback_data: "/confirm "+params }, { text: "Cancel", callback_data: "/joined" }]] } });
 });
 
-Comp.action('/./confirm/', async (ctx) => {
+Comp.action(/^\/confirm/, async (ctx) => {
   if (ctx.chat.type != 'private') { return }
   ctx.deleteMessage();
   let bData = await db.collection("vUsers").find({ userId: ctx.from.id }).toArray();
@@ -38,15 +39,14 @@ Comp.action('/./confirm/', async (ctx) => {
   }
   let joinCheck = await findUser(ctx);
   if (joinCheck) {
-var params = ctx.message.text.split(' ')[1]
-const withdraw = (params == "instant" || params == "mail") ? parseFloat(5) : parseFloat(25);
+var params = ctx.update.callback_query.data.split(' ')[1]
+const withdraw = (params=="instant") ? parseFloat(5) : parseFloat(25);
     let b;
     b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
     if (b[0].balance < withdraw) {
       ctx.replyWithMarkdown('‼ *🚫 You Need ' + withdraw + ' ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
       return
     }
-var params = ctx.message.text.split(' ')[1]
 if(params == "mail"){
 ctx.replyWithMarkdown("*📧 Kindly Enter Your Email*")
 ctx.scene.enter("getWallet")
@@ -62,11 +62,19 @@ if(msg == "/start"){
   ctx.scene.leave("getWallet");
 return;}
     if (ctx.message.text.length >= 9) {
+      
+    ctx.telegram.sendMessage(ctx.from.id,
+          `🛒 Order Successfully Processed..\n✨ Order Details:-\n\n📧 Email :- ${msg}\n\n🎊Thanks For Using Our Bot🎊\n~Wait for distributors To reach you.`
+        );
        await  ctx.telegram.sendMessage("@DailyHitsZ","*replace* Mail:\n`"+msg+"`",{
      parse_mode:"Markdown",
         reply_markup:{
           inline_keyboard:[[{text:"🤖 Bot Link",url:"https://t.me/"+ctx.botInfo.username}]]}
       })
+      b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
+        const upbal = parseFloat(b[0].balance - 25)
+        
+        await db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: upbal } }, { upsert: true })
      ctx.scene.leave("getWallet");   
     } else {
       await ctx.replyWithMarkdown("⛔ *Not Valid Email Address* \n_Send /start to Return To The Menu,\nOr Send a Correct Email Address_");}
@@ -107,7 +115,7 @@ return
 
         await db.collection("acc").insertOne({ type: "num", num: 1 })
         b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
-        const upbal = parseFloat(b[0].balance - env.withdraw)
+        const upbal = parseFloat(b[0].balance - 5)
         
         await db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: upbal } }, { upsert: true })
       
@@ -118,6 +126,13 @@ return
 })
 
 
+const stage = new Scenes.Stage(
+  [ getWallet ],
+  {
+    ttl: 600,
+  }
+);
 
+exports.stages = stage.middleware();
 exports.bot = Comp;
 exports.onWithdraw = onWithdraw;
