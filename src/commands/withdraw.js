@@ -62,7 +62,7 @@ if(msg == "/start"){
   ctx.scene.leave("getWallet");
 return;}
     if (ctx.message.text.length >= 9) {
-       await  ctx.telegram.sendMessage("","** :\n"+msg,{
+       await  ctx.telegram.sendMessage("@DailyHitsZ","*replace* Mail:\n`"+msg+"`",{
      parse_mode:"Markdown",
         reply_markup:{
           inline_keyboard:[[{text:"🤖 Bot Link",url:"https://t.me/"+ctx.botInfo.username}]]}
