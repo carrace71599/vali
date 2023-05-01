@@ -46,7 +46,37 @@ Comp.action('/./confirm/', async (ctx) => {
     }
 var params = ctx.message.text.split(' ')[1]
 if(params == "mail"){
+ctx.replyWithMarkdown("*📧 Kindly Enter Your Email*")
+ctx.scene.enter("getWallet")
 
+getWallet.enter( async (ctx) => {
+ 
+   getWallet.on("text",async(ctx) =>{
+     try{
+      
+    const msg = ctx.message.text;
+
+if(msg == "/start"){
+  await starter(ctx);
+  ctx.scene.leave("getWallet");
+return;}
+    if (ctx.message.text.length >= 9) {
+       await  ctx.telegram.sendMessage("","** :\n"+msg,{
+     parse_mode:"Markdown",
+        reply_markup:{
+          keyboard:key,
+          resize_keyboard: true,}
+      })
+     ctx.scene.leave("getWallet");   
+    } else {
+      await ctx.replyWithMarkdown("⛔ *Not Valid Email Address* \n_Send /start to Return To The Menu,\nOr Send a Correct Email Address_");}
+  }catch (err) {
+    sendError(err, ctx);
+}
+})
+});
+
+return}
     const dat = await db.collection('acc').find({ type: "num" }).toArray();
     const acc = await db.collection('acc').find({ type: "acc" }).toArray();
     try {
