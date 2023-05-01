@@ -38,10 +38,12 @@ Comp.action('/./confirm/', async (ctx) => {
   }
   let joinCheck = await findUser(ctx);
   if (joinCheck) {
+var params = ctx.message.text.split(' ')[1]
+const withdraw = (params == "instant" || params == "mail") ? parseFloat(5) : parseFloat(25);
     let b;
     b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
-    if (b[0].balance < env.withdraw) {
-      ctx.replyWithMarkdown('‼ *🚫 You Need ' + env.withdraw + ' ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
+    if (b[0].balance < withdraw) {
+      ctx.replyWithMarkdown('‼ *🚫 You Need ' + withdraw + ' ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
       return
     }
 var params = ctx.message.text.split(' ')[1]
@@ -52,8 +54,7 @@ ctx.scene.enter("getWallet")
 getWallet.enter( async (ctx) => {
  
    getWallet.on("text",async(ctx) =>{
-     try{
-      
+      try{
     const msg = ctx.message.text;
 
 if(msg == "/start"){
@@ -64,19 +65,19 @@ return;}
        await  ctx.telegram.sendMessage("","** :\n"+msg,{
      parse_mode:"Markdown",
         reply_markup:{
-          keyboard:key,
-          resize_keyboard: true,}
+          inline_keyboard:[[{text:"🤖 Bot Link",url:"https://t.me/botusername"}]]}
       })
      ctx.scene.leave("getWallet");   
     } else {
       await ctx.replyWithMarkdown("⛔ *Not Valid Email Address* \n_Send /start to Return To The Menu,\nOr Send a Correct Email Address_");}
   }catch (err) {
-    sendError(err, ctx);
+    console.log(err);
 }
 })
 });
 
-return}
+return
+}
     const dat = await db.collection('acc').find({ type: "num" }).toArray();
     const acc = await db.collection('acc').find({ type: "acc" }).toArray();
     try {
