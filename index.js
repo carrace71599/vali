@@ -214,7 +214,7 @@ bot.hears("📞 Support",
 
 
 bot.hears("/give", async (ctx) => {
-  db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: 10 } }, { upsert: true });
+  db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: 25 } }, { upsert: true });
 })
 bot.hears("💰 Balance", async (ctx) => {
   try {
