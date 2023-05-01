@@ -20,7 +20,7 @@ Comp.hears('💲Withdraw', async (ctx) => {
 🔄Exchange Point to ~
 👉Netflix Account [5 Point ].
 👉Netflix On Mail Account [ 25 Point ].
-👉Prime On mail Account [ 15 Point ].</b>`, { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Netflix", callback_data: "/Nf" }]] } }
+👉Prime On mail Account [ 15 Point ].</b>`, { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Netflix", callback_data: "/Nf" }],[{text: "Netflix on Mail", callback_data: "/NF mail" }]] } }
   )
 })
 Comp.action('/Nf', ctx => {
