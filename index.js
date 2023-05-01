@@ -8,14 +8,13 @@ const mongo = require("./src/functions/mongoClient");
 bot.launch().then(console.log("Bot Launched"));
 const { db } = require("./src/functions/mongoClient");
 const { starter } = require('./src/functions/starter');
-
 const { profit, curr, findUser, findUserCallback, sendError, sendInlineError, mustJoin, isNumeric, globalBroadCast } = require("./src/functions/misc.js");
 
-
+const { stages } = require('./src/commands/withdraw')
 const withComp = require('./src/commands/withdraw').bot
 
 bot.use(session());
-
+bot.use(stages);
 bot.use(withComp);
 
 const rateLimit = require("telegraf-ratelimit");
