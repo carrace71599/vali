@@ -20,15 +20,16 @@ Comp.hears('💲Withdraw', async (ctx) => {
 🔄Exchange Point to ~
 👉Netflix Account [5 Point ].
 👉Netflix On Mail Account [ 25 Point ].
-👉Prime On mail Account [ 15 Point ].</b>`, { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Netflix", callback_data: "/Nf" }],[{text: "Netflix on Mail", callback_data: "/NF mail" }]] } }
+👉Prime On mail Account [ 15 Point ].</b>`, { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Netflix", callback_data: "/Nf instant" }],[{text: "Netflix on Mail", callback_data: "/NF mail" }]] } }
   )
 })
-Comp.action('/Nf', ctx => {
+Comp.action(/./Nf/, ctx => {
+var params = ctx.message.text.split(' ')[1]
   ctx.editMessageText(`<b>🎁For Exchange Points to Account :-
-🖲Please Click on Comfirm</b>`, { chat_id: ctx.chat.id, message_id: ctx.callbackQuery.message.message_id, parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Confirm", callback_data: "/confirm" }, { text: "Cancel", callback_data: "/joined" }]] } });
+🖲Please Click on Comfirm</b>`, { chat_id: ctx.chat.id, message_id: ctx.callbackQuery.message.message_id, parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Confirm", callback_data: "/confirm "+params }, { text: "Cancel", callback_data: "/joined" }]] } });
 });
 
-Comp.action('/confirm', async (ctx) => {
+Comp.action('/./confirm/', async (ctx) => {
   if (ctx.chat.type != 'private') { return }
   ctx.deleteMessage();
   let bData = await db.collection("vUsers").find({ userId: ctx.from.id }).toArray();
@@ -43,6 +44,9 @@ Comp.action('/confirm', async (ctx) => {
       ctx.replyWithMarkdown('‼ *🚫 You Need ' + env.withdraw + ' ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
       return
     }
+var params = ctx.message.text.split(' ')[1]
+if(params == "mail"){
+
     const dat = await db.collection('acc').find({ type: "num" }).toArray();
     const acc = await db.collection('acc').find({ type: "acc" }).toArray();
     try {
