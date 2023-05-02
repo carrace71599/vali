@@ -20,8 +20,9 @@ Comp.hears('💲Withdraw', async (ctx) => {
 
 🔄Exchange Point to ~
 👉Netflix Account [5 Point ].
-👉Netflix On Mail Account [ 25 Point ].
-👉Prime On mail Account [ 15 Point ].</b>`, { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "Netflix", callback_data: "/Nf instant" }],[{text: "Netflix on Mail", callback_data: "/Nf mail" }]] } }
+👉Netflix On Mail Account [ 30 Point ].
+👉Prime On mail Account [ 15 Point ].</b>`, 
+{ parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "NETFLIX", callback_data: "/Nf instant" }],[{text: "🔥 NETFLIX ON MAIL", callback_data: "/Nf mail" }],[{text: "🔥 PRIME ON MAIL", callback_data: "/Nf prime" }]]} }
   )
 })
 Comp.action(/^\/Nf/, ctx => {
@@ -40,14 +41,13 @@ Comp.action(/^\/confirm/, async (ctx) => {
   let joinCheck = await findUser(ctx);
   if (joinCheck) {
 var params = ctx.update.callback_query.data.split(' ')[1]
-const withdraw = (params=="instant") ? parseFloat(5) : parseFloat(25);
-    let b;
-    b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
-    if (b[0].balance < withdraw) {
-      ctx.replyWithMarkdown('‼ *🚫 You Need ' + withdraw + ' ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
+   let b;
+if(params == "prime"){
+b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
+    if (b[0].balance < 15) {
+      ctx.replyWithMarkdown('‼ *🚫 You Need 15 ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
       return
     }
-if(params == "mail"){
 ctx.replyWithMarkdown("*📧 Kindly Enter Your Email*")
 ctx.scene.enter("getWallet")
 
@@ -66,13 +66,13 @@ return;}
     ctx.telegram.sendMessage(ctx.from.id,
           `🛒 Order Successfully Processed..\n✨ Order Details:-\n\n📧 Email :- ${msg}\n\n🎊Thanks For Using Our Bot🎊\n~Wait for distributors To reach you.`
         );
-       await  ctx.telegram.sendMessage("@DailyHitsZ","*replace* Mail:\n`"+msg+"`",{
+       await  ctx.telegram.sendMessage(env.paych,"*✅ New Account Request✅\n\n👤 User = @"+ctx.from.username+"\n🛎 Request = Prime\n📧 Mail:*\n`"+msg+"`",{
      parse_mode:"Markdown",
         reply_markup:{
           inline_keyboard:[[{text:"🤖 Bot Link",url:"https://t.me/"+ctx.botInfo.username}]]}
       })
       b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
-        const upbal = parseFloat(b[0].balance - 25)
+        const upbal = parseFloat(b[0].balance - 15)
         
         await db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: upbal } }, { upsert: true })
      ctx.scene.leave("getWallet");   
@@ -86,6 +86,56 @@ return;}
 
 return
 }
+if(params == "mail"){
+b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
+    if (b[0].balance < 30) {
+      ctx.replyWithMarkdown('‼ *🚫 You Need 30 ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
+      return
+    }
+ctx.replyWithMarkdown("*📧 Kindly Enter Your Email*")
+ctx.scene.enter("getWallet")
+
+getWallet.enter( async (ctx) => {
+ 
+   getWallet.on("text",async(ctx) =>{
+      try{
+    const msg = ctx.message.text;
+
+if(msg == "/start"){
+  await starter(ctx);
+  ctx.scene.leave("getWallet");
+return;}
+    if (ctx.message.text.length >= 9) {
+      
+    ctx.telegram.sendMessage(ctx.from.id,
+          `🛒 Order Successfully Processed..\n✨ Order Details:-\n\n📧 Email :- ${msg}\n\n🎊Thanks For Using Our Bot🎊\n~Wait for distributors To reach you.`
+        );
+       await  ctx.telegram.sendMessage(env.paych,"*✅ New Account Request✅\n\n👤 User = @"+ctx.from.username+"\n🛎 Request = Netflix\n📧 Mail:*\n`"+msg+"`",{
+     parse_mode:"Markdown",
+        reply_markup:{
+          inline_keyboard:[[{text:"🤖 Bot Link",url:"https://t.me/"+ctx.botInfo.username}]]}
+      })
+      b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
+        const upbal = parseFloat(b[0].balance - 30)
+        
+        await db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: upbal } }, { upsert: true })
+     ctx.scene.leave("getWallet");   
+    } else {
+      await ctx.replyWithMarkdown("⛔ *Not Valid Email Address* \n_Send /start to Return To The Menu,\nOr Send a Correct Email Address_");}
+  }catch (err) {
+    console.log(err);
+}
+})
+});
+
+return
+}
+if(params == "instant"){
+b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
+    if (b[0].balance < 5) {
+      ctx.replyWithMarkdown('‼ *🚫 You Need 5 ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
+      return
+    }
     const dat = await db.collection('acc').find({ type: "num" }).toArray();
     const acc = await db.collection('acc').find({ type: "acc" }).toArray();
     try {
@@ -97,7 +147,7 @@ return
         const email = Accs[0];
         const pass = Accs[1]
         const country = Accs[2]
-        const mobile = Accs[2]
+        const mobile = Accs[3]
 
         ctx.telegram.sendMessage(ctx.from.id,
           `🛒 Order Successfully Completed..\n📧 Account Details:-\n📧 Email :- ${email}\n🔐 Password :- ${pass}\n🌐 Country :- ${country}\n📞Phone Number :- ${mobile}\n🎊Thanks For Using Our Bot🎊\n~Send Screenshot To @abhishek71599`
@@ -110,6 +160,8 @@ return
         var Accs = Acc.split(":")
         const email = Accs[0];
         const pass = Accs[1]
+        const country = Accs[2]
+        const mobile = Accs[3]
         ctx.telegram.sendMessage(ctx.from.id,
           `🛒 Order Successfully Completed..\n📧 Account Details:-\n📧 Email :- ${email}\n🔐 Password :- ${pass}\n🎊Thanks For Using Our Bot🎊\n~Send Screenshot To @abhishek71599`
         );
@@ -124,6 +176,7 @@ return
     } catch (err) {
       ctx.replyWithMarkdown("*🛒Sorry , This Product is out of stock .\n🪄 We will Inform You when it cames back.*")
     }
+  }
   } else { await mustJoin(ctx, db); }
 })
 
