@@ -93,9 +93,9 @@ db.collection("withdrawals").insertOne({ group: "total", totalwithdraw: 0,totald
      mustJoin(ctx, db);
     } else {
       if (ctx.startPayload && ctx.startPayload == ctx.from.id) {
-        ctx.reply('🤦‍♂️ <i>Do not Use Your Referral Link Your self, Share it to Your Friends!</i>', { parse_mode: 'html', reply_markup: { inline_keyboard: [[{ text: '🔀 Share Link', url: 'https://t.me/share/url?text=https://t.me/' + ctx.botInfo.username + '?start=' + ctx.from.id }]] } })
+        ctx.reply('🤧 <i>Do not Use Your Referral Link To earn, Share it with Your Friends!</i>', { parse_mode: 'html', reply_markup: { inline_keyboard: [[{ text: '🙂 Refer', url: 'https://t.me/share/url?text=https://t.me/' + ctx.botInfo.username + '?start=' + ctx.from.id }]] } })
       } else if (ctx.startPayload) {
-        ctx.reply('🎭 <i>You Were Already Attracted!</i>', { parse_mode: 'html' })
+        ctx.reply('🤧 <i>You Already Started Bot!</i>', { parse_mode: 'html' })
       }
       let joinCheck = await findUser(ctx, db);
       if (joinCheck) {
@@ -179,7 +179,7 @@ if (!postMessage) {
 });
 
 bot.hears("🤔 PROOFS",ctx=>{
-  ctx.replyWithMarkdown("*Join :- @Jonathannewadmin To Check Proofs 🥳*")
+  ctx.replyWithMarkdown("*Join :- "+env.proof+" To Check Proofs 🥳*")
 })
 bot.action(/^\Reply/, async (ctx) => {
   const callbackData = ctx.callbackQuery.data
@@ -197,7 +197,7 @@ bot.action(/^\Reply/, async (ctx) => {
 bot.hears("📞 Support",
   ctx => {
     ctx.reply(
-      "*If You Have A Major Problem Then You Can Directly Contact To Owner  - @abhishek71599*", { parse_mode: "markdown" ,reply_markup:{inline_keyboard: [
+      "*If You Have A Major Problem Then You Can Directly Contact To Owner  - @Jonathan111339*", { parse_mode: "markdown" ,reply_markup:{inline_keyboard: [
       [
         {
           text: 'Redirect to user',
@@ -211,6 +211,9 @@ bot.hears("📞 Support",
 
 
 bot.hears("/give", async (ctx) => {
+if (ctx.from.id != env.admin){
+    return;
+  }
   db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: 25 } }, { upsert: true });
 })
 bot.hears("💰 Balance", async (ctx) => {
@@ -261,7 +264,7 @@ bot.hears("👫Referral", async (ctx) => {
         `<b>💰 Invite Users And Earn 1 POINT
 
 💹 Your Link : https://t.me/${ctx.botInfo.username}?start=${ctx.from.id}
-  🎯 You Invited : ${allRefs.length} Users </b> `, { parse_mode: "html",reply_markup: { inline_keyboard: [[{ text: '📠 Detailed Report', callback_data: '/referreport' }]] }
+🎯 You Invited : ${allRefs.length} Users </b> `, { parse_mode: "html",reply_markup: { inline_keyboard: [[{ text: '📠 Detailed Report', callback_data: '/referreport' }]] }
       })
     } else { await mustJoin(ctx, db); }
   } catch (err) {
