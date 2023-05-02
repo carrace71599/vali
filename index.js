@@ -288,7 +288,23 @@ bot.action('/referreport', async (ctx) => {
     sendInlineError(err, ctx)
   }
 })
-
+bot.command('status', async (ctx) => {
+if (ctx.from.id != env.admin){
+    return;
+  }
+  const acc = await db.collection("acc").find({type:"acc"}).toArray();
+  if (acc.length == 0) {
+    ctx.replyWithMarkdown('No accounts found');
+    return;
+  }
+  const accounts = acc[0].acc;
+  const count = accounts.length;
+  let message = `✅ Total Account Added :- ${count}\n\n🗞 List:-\n`;
+  for (let i = 0; i < count; i++) {
+    message += `${i + 1}) ${accounts[i]}\n`;
+  }
+  ctx.replyWithMarkdown(message);
+});
 bot.command('add', async (ctx) => {
   if (ctx.from.id != env.admin){
     return;
