@@ -1,4 +1,4 @@
-# Airdrop Boy v1.0.0
+# Netflix Bot v1.0.0
 
 ## How to Host This Bot?
 
