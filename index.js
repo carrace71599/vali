@@ -164,8 +164,6 @@ bot.command("broadcast", async (ctx) => {
     return;
   }
 
-  let admin = env.admin;
-
   let postMessage =  ctx.message.text.slice(10);
 if (!postMessage) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/broadcast message`');
@@ -289,6 +287,9 @@ bot.action('/referreport', async (ctx) => {
 })
 
 bot.command('add', async (ctx) => {
+  if (ctx.from.id != env.admin){
+    return;
+  }
   const params = ctx.message.text.split(' ')[1];
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
