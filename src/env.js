@@ -3,29 +3,31 @@ let mongoUrl;
 let adminid;
 let channel;
 let chkchan;
+let proof = '@Jonathannewadmin';
 let refer = '1'//Reward Pool Of Your Bot in Usdt
 let withdraw = '5' //Market on which Your Coin is Available
-let paych = "@rest516";
+let paych = "@mailrequest";
 let curr = 'Point'
 let maxchnl = '6'
+let heading = ['Main Channel','Netflix city','Father of Netflix'];
 if(!process.env.channel){
-    channel = ['@rest516'] //Put Telegram Channel here
+    channel = ['joaenus','jonathansks','jonusmod'] //Put Telegram Channel here
 }else{
     channel = process.env.channel
 }
 if(!process.env.chkchan){
-    chkchan = ['@rest516'] //put channel to add check
+    chkchan = ['@joaenus','@jonathansks','@jonusmod'] //put channel to add check like '@rest516','test'
 }else{
   chkchan = process.env.chkchan
 }
 if(!process.env.admin){
-    adminid = '1834957586' //Put Telegram User ID of Admin of the Bot
+    adminid = '5328855388' //Put Telegram User ID of Admin of the Bot
 }else{
     adminid = process.env.admin
 }
 
 if(!process.env.bot_token){
-    botToken = '5815565391:AAHrvxlQoIQ7tXeAEWRrCp3ClN_xJ0a6pYQ' //Replace Bot token
+    botToken = '5926499177:AAFEupgJBuvOOz3Y3jFBPqEp_X1NI9JTKhA' //Replace Bot token
 }else{
     botToken = process.env.bot_token
 }
@@ -47,5 +49,7 @@ refer,
 withdraw,
 curr,
 maxchnl,
+heading,
   paych,
+proof
 }
