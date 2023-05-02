@@ -96,9 +96,11 @@ return
         var Accs = Acc.split(":")
         const email = Accs[0];
         const pass = Accs[1]
+        const country = Accs[2]
+        const mobile = Accs[2]
 
         ctx.telegram.sendMessage(ctx.from.id,
-          `🛒 Order Successfully Completed..\n📧 Account Details:-\n📧 Email :- ${email}\n🔐 Password :- ${pass}\n🎊Thanks For Using Our Bot🎊\n~Send Screenshot To @abhishek71599`
+          `🛒 Order Successfully Completed..\n📧 Account Details:-\n📧 Email :- ${email}\n🔐 Password :- ${pass}\n🌐 Country :- ${country}\n📞Phone Number :- ${mobile}\n🎊Thanks For Using Our Bot🎊\n~Send Screenshot To @abhishek71599`
         );
 
         db.collection("acc").updateOne({ type: "num" }, { $set: { num: num + 1 } }, { upsert: true });
