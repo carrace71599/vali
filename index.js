@@ -302,13 +302,13 @@ if (ctx.from.id != env.admin){
   let message = `✅ Total Account Added :- ${count}\n\n🗞 List:-\n`;
   for (let i = 0; i < count; i++) {
     message += `${i + 1}) ${accounts[i]}\n`;
-    if (i > 0 && (i + 1) % 20 == 0) {
-      ctx.replyWithMarkdown(message);
+    if (i > 0 && (i + 1) % 50 == 0) {
+      ctx.reply(message);
       message = '';
     }
   }
   if (message.length > 0) {
-    ctx.replyWithMarkdown(message);
+    ctx.reply(message);
   }
 });
 bot.command('add', async (ctx) => {
