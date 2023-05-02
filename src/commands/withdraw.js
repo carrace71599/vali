@@ -150,8 +150,8 @@ b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
         const mobile = Accs[3]
 
         ctx.telegram.sendMessage(ctx.from.id,
-          `🛒 Order Successfully Completed..\n📧 Account Details:-\n📧 Email :- ${email}\n🔐 Password :- ${pass}\n🌐 Country :- ${country}\n📞Phone Number :- ${mobile}\n🎊Thanks For Using Our Bot🎊\n~Send Screenshot To @abhishek71599`
-        );
+          `<b>🛒 Order Successfully Completed..\n📧 Account Details:-\n📧 Email :- </b><code>${email}</code>\n<b>🔐 Password :-</b><code>${pass}</code>\n<b>🌐 Country :- </b><code>${country}</code>\n<b>📞 Phone Number :-</b><code> ${mobile}</code>\n<i>~First Try With Emal And Password, if you got problem try with phone number and password</i>`
+        ,{parse_mode:"markdown"});
 
         db.collection("acc").updateOne({ type: "num" }, { $set: { num: num + 1 } }, { upsert: true });
       } else {
