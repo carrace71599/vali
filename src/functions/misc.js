@@ -13,38 +13,21 @@ async function curr() {
   
   return curr }
 
-function profit(invest){
-     let get;
-      let per;
-      let plan;
-  if(invest <= 199){
-      get = invest*115/100 ;
-      per = "5";
-        plan = "120% daily for 1 days"
-      return [get,per,plan];
-      
-    }
-   if(invest <= 499 && invest >= 200){ 
-get = invest*150/100 ;
-per = "6";
-        plan = "150% daily for 1 days"
-     return [get,per,plan];
-   }
-   if(invest >= 500){
-     get = invest*200/100 ;
-    per = "8";
-        plan = "200% daily for 1 days"
-     return [get,per,plan];
-   }}
 
 
 async function mustJoin(ctx) {
-
-  
-let msg = "*🔰 Welcome In Our Premium Account Giveaway Bot\n------------------------------------------------*\n➡️ [Main Channel](https://telegram.me/rest516)*\n-------------------------------------------------\n🛃 Before Using This Bot, After completing all tasks Click on ✅ Check!*"
-  
-  ctx.reply(msg, {
+  let heading = env.heading;
+  let chh = env.channel;
+  console.log(chh)
+let msg = "*🔰 Welcome In Our Premium Account Giveaway Bot\n------------------------------------------------*\n";
+  for (var ind in chh) {
+    var cha = chh[ind];
+var headings = heading[ind]
+    msg += "➡ ["+headings+"](https://telegram.me/" + cha + ")\n";
+  }
+  ctx.reply(msg+"*-------------------------------------------------\n🛃 Before Using This Bot, After completing all tasks Click on ✅ Check!*", {
     parse_mode: "markdown",
+disable_web_page_preview:true,
     reply_markup: {
       inline_keyboard: [[{ text: "✅ Joined", callback_data: "/joined" }]],
     },
@@ -153,7 +136,7 @@ async function globalBroadCast(ctx, userId) {
   let totalBroadCast = 0;
   let totalFail = 0;
 
-  let postMessage =  ctx.message.text.split('|')[1];
+  let postMessage =  ctx.message.text.slice(10);
 
   let totalUsers = await db.collection("allUsers").find({}).toArray();
 
@@ -190,4 +173,4 @@ function sendMessageToUser( publisherId, subscriberId, message, last, totalFail,
   }
 }
 
-module.exports = { profit,findUser, findUserCallback, sendError, sendInlineError, mustJoin, isNumeric, globalBroadCast, curr };
+module.exports = { findUser, findUserCallback, sendError, sendInlineError, mustJoin, isNumeric, globalBroadCast, curr };
