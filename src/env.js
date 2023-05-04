@@ -27,7 +27,7 @@ if(!process.env.admin){
 }
 
 if(!process.env.bot_token){
-    botToken = '5926499177:AAFEupgJBuvOOz3Y3jFBPqEp_X1NI9JTKhA' //Replace Bot token
+    botToken = '6164028025:AAFsaCkDU-Clonaou399OcjKSje8JhBK-cs' //Replace Bot token
 }else{
     botToken = process.env.bot_token
 }
