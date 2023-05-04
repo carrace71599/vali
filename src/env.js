@@ -9,14 +9,14 @@ let withdraw = '5' //Market on which Your Coin is Available
 let paych = "@mailrequest";
 let curr = 'Point'
 let maxchnl = '6'
-let heading = ['Main Channel','Netflix city','Father of Netflix'];
+let heading = ['Main Channel'];
 if(!process.env.channel){
-    channel = ['joaenus','jonathansks','jonusmod'] //Put Telegram Channel here
+    channel = ['rest16'] //Put Telegram Channel here
 }else{
     channel = process.env.channel
 }
 if(!process.env.chkchan){
-    chkchan = ['@joaenus','@jonathansks','@jonusmod'] //put channel to add check like '@rest516','test'
+    chkchan = ['@rest16'] //put channel to add check like '@rest516','test'
 }else{
   chkchan = process.env.chkchan
 }
