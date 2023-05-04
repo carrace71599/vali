@@ -9,14 +9,14 @@ let withdraw = '5' //Market on which Your Coin is Available
 let paych = "@mailrequest";
 let curr = 'Point'
 let maxchnl = '6'
-let heading = ['Main Channel'];
+let heading = ['Main Channel','Netflix city','Father of Netflix'];
 if(!process.env.channel){
-    channel = ['rest16'] //Put Telegram Channel here
+    channel = ['joaenus','jonathansks','jonusmod'] //Put Telegram Channel here
 }else{
     channel = process.env.channel
 }
 if(!process.env.chkchan){
-    chkchan = ['@rest16'] //put channel to add check like '@rest516','test'
+    chkchan = ['@joaenus','@jonathansks','@jonusmod'] //put channel to add check like '@rest516','test'
 }else{
   chkchan = process.env.chkchan
 }
@@ -27,7 +27,7 @@ if(!process.env.admin){
 }
 
 if(!process.env.bot_token){
-    botToken = '6164028025:AAFsaCkDU-Clonaou399OcjKSje8JhBK-cs' //Replace Bot token
+    botToken = '5926499177:AAFEupgJBuvOOz3Y3jFBPqEp_X1NI9JTKhA' //Replace Bot token
 }else{
     botToken = process.env.bot_token
 }
