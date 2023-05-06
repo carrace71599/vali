@@ -19,7 +19,7 @@ Comp.hears('💲Withdraw', async (ctx) => {
 💰Your Balance ${b[0].balance} ${env.curr}.
 
 🔄Exchange Point to ~
-👉Netflix Account [5 Point ].
+👉Netflix Account [7 Point ].
 👉Netflix On Mail Account [ 30 Point ].
 👉Prime On mail Account [ 15 Point ].</b>`, 
 { parse_mode: "html", reply_markup: { inline_keyboard: [[{ text: "NETFLIX", callback_data: "/Nf instant" }],[{text: "🔥 NETFLIX ON MAIL", callback_data: "/Nf mail" }],[{text: "🔥 PRIME ON MAIL", callback_data: "/Nf prime" }]]} }
@@ -132,8 +132,8 @@ return
 }
 if(params == "instant"){
 b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
-    if (b[0].balance < 5) {
-      ctx.replyWithMarkdown('‼ *🚫 You Need 5 ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
+    if (b[0].balance < 7) {
+      ctx.replyWithMarkdown('‼ *🚫 You Need 7 ' + await curr() + ' For Exchanging .\n👬 Refer More to Earn .*')
       return
     }
     const dat = await db.collection('acc').find({ type: "num" }).toArray();
