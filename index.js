@@ -316,6 +316,18 @@ bot.command('add', async (ctx) => {
     return;
   }
   const params = ctx.message.text.split(' ')[1];
+
+
+var button = [[{"text":"Netflix",callback_data:"/Nfadd "+params},{"text":"Spotify",callback_data:"/sadd "+params}]]
+  ctx.reply("*Select which Service you Want to Use.*",{parse_mode:"markdown",reply_markup:{inline_keyboard:button}})
+  })
+bot.action('/Nfadd',async(ctx)=>{
+  if (ctx.from.id != env.admin){
+
+    return;
+
+  }
+  const params = ctx.message.text.split(' ')[1];
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
  return }
@@ -331,11 +343,55 @@ bot.command('add', async (ctx) => {
     } else {
       const dataArray = params.split('\n');
                                             await db.collection("acc").insertOne({type:"acc",acc:dataArray});
-      
+     
     ctx.replyWithMarkdown('done');
     }
 });
+bot.action('/sadd',async (ctx)=>{
 
+  if (ctx.from.id != env.admin){
+
+    return;
+
+  }
+
+  const params = ctx.message.text.split(' ')[1];
+
+  if (!params) {
+
+    ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
+
+ return }
+
+    const acc = await db.collection("acc").find({type:"sacc"}).toArray()
+
+                                          if(acc.length != 0){
+
+      const data = params.split('\n');
+
+                                            
+
+      const final = acc[0].acc.concat(data);
+
+ await db.collection("acc").updateOne({ type: "sacc" }, { $set: { sacc: final } }, { upsert: true })
+
+  
+
+                                            ctx.replyWithMarkdown('*success*');
+
+    } else {
+
+      const dataArray = params.split('\n');
+
+                                            await db.collection("acc").insertOne({type:"sacc",sacc:dataArray});
+
+     
+
+    ctx.replyWithMarkdown('done');
+
+    }
+
+});
 
 bot.command('filter', (ctx) => {
    const message = ctx.message.text.slice(7);
