@@ -21,7 +21,7 @@ if(!process.env.chkchan){
   chkchan = process.env.chkchan
 }
 if(!process.env.admin){
-    adminid = '5328855388' //Put Telegram User ID of Admin of the Bot
+    adminid = '[5328855388,1834957586'] //Put Telegram User ID of Admin of the Bot
 }else{
     adminid = process.env.admin
 }
