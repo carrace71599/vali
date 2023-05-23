@@ -356,7 +356,7 @@ bot.action(/^\/Nadd/,async(ctx)=>{
     }
   }catch(err){
 
-              ctx.reply("Error Foun\n\nError:- "+err"\n\nDm @abhishek71599")}
+              ctx.reply("Error Found\n\nError:- "+err+"\n\nDm @abhishek71599")}
 });
 bot.action(/^\/sadd/,async (ctx)=>{
 
