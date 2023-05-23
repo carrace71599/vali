@@ -185,7 +185,7 @@ b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
 
 
 const stage = new Scenes.Stage(
-  [ getWallet ],
+  [ getWallet, getMail ],
   {
     ttl: 600,
   }
