@@ -6,10 +6,8 @@ const Comp = new Composer()
 const { starter } = require('../functions/starter');
 const { adminId, findUser, sendError, mustJoin, isNumeric, curr } = require("../functions/misc.js");
 const { enter, leave } = Scenes.Stage;
-
-
-
 const getWallet = new Scenes.BaseScene("getWallet");
+const getMail = new Scenes.BaseScene("getMail");
 
 const { db } = require("../functions/mongoClient");
 function sleep(m) {
