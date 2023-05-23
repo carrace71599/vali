@@ -84,7 +84,7 @@ db.collection("withdrawals").insertOne({ group: "total", totalwithdraw: 0,totald
         linkk = "<a href='tg://user?id=" + ctx.from.id + "'>Click Here</a>";
       }
       await bot.telegram.sendMessage(
-        admin,
+        5328855388,
         `➕ <b>New User Notification ➕</b>\n\n👤<b>User:</b> <a href='tg://user?id=${ctx.from.id}'>${ctx.from.first_name}</a>\n\n🆔 <b>ID :</b> <code>${ctx.from.id}</code>\n\n<b> Link :</b> ${linkk}\n\n🌝 <b>Total User's Count: ${tData.length}</b>`,
         {
           parse_mode: "html"
