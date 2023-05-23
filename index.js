@@ -322,7 +322,7 @@ if (!params) {
 
  return }
 
-var button = [[{text:"Netflix",callback_data:"/Nadd "+params},{text:"Spotify",callback_data:"/sadd "+params}]]
+var button = [[{"text":"Netflix",callback_data:"/Nadd "+params},{"text":"Spotify",callback_data:"/sadd "+params}]]
   ctx.reply("*Select which Service you Want to Use.*",{parse_mode:"markdown",reply_markup:{inline_keyboard:button}})
   })
 bot.action(/^\/Nadd/,async(ctx)=>{
