@@ -316,18 +316,22 @@ bot.command('add', async (ctx) => {
     return;
   }
   const params = ctx.message.text.split(' ')[1];
+if (!params) {
 
+    ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
 
-var button = [[{text:"Netflix",callback_data:"/Nfadd "+params},{text:"Spotify",callback_data:"/sadd "+params}]]
+ return }
+
+var button = [[{text:"Netflix",callback_data:"/Nadd "+params},{text:"Spotify",callback_data:"/sadd "+params}]]
   ctx.reply("*Select which Service you Want to Use.*",{parse_mode:"markdown",reply_markup:{inline_keyboard:button}})
   })
-bot.action(/^\/Nfadd/,async(ctx)=>{
+bot.action(/^\/Nadd/,async(ctx)=>{
   if (ctx.from.id != env.admin){
 
     return;
 
   }
-  const params = ctx.message.text.split(' ')[1];
+  const params = ctx.update.callback_query.data.split(' ')[1];
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
  return }
@@ -355,7 +359,7 @@ bot.action(/^\/sadd/,async (ctx)=>{
 
   }
 
-  const params = ctx.message.text.split(' ')[1];
+  const params = ctx.update.callback_query.data.split(' ')[1];
 
   if (!params) {
 
