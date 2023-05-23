@@ -345,16 +345,18 @@ bot.action(/^\/Nadd/,async(ctx)=>{
  await db.collection("acc").updateOne({ type: "acc" }, { $set: { acc: final } }, { upsert: true })
   
                                             ctx.replyWithMarkdown('*success*');
-                                            }catch(err){
-              ctx.reply("Error Foun\n\nError:- "+err"\n\nDm @abhishek71599")}
+                                            
 
-                                }
+
     } else {
       const dataArray = params.split('\n');
                                             await db.collection("acc").insertOne({type:"acc",acc:dataArray});
      
     ctx.replyWithMarkdown('done');
     }
+  }catch(err){
+
+              ctx.reply("Error Foun\n\nError:- "+err"\n\nDm @abhishek71599")}
 });
 bot.action(/^\/sadd/,async (ctx)=>{
 
