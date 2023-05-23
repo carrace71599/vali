@@ -318,10 +318,10 @@ bot.command('add', async (ctx) => {
   const params = ctx.message.text.split(' ')[1];
 
 
-var button = [[{"text":"Netflix",callback_data:"/Nfadd "+params},{"text":"Spotify",callback_data:"/sadd "+params}]]
+var button = [[{text:"Netflix",callback_data:"/Nfadd "+params},{text:"Spotify",callback_data:"/sadd "+params}]]
   ctx.reply("*Select which Service you Want to Use.*",{parse_mode:"markdown",reply_markup:{inline_keyboard:button}})
   })
-bot.action('/Nfadd',async(ctx)=>{
+bot.action(/^\/Nfadd/,async(ctx)=>{
   if (ctx.from.id != env.admin){
 
     return;
@@ -347,7 +347,7 @@ bot.action('/Nfadd',async(ctx)=>{
     ctx.replyWithMarkdown('done');
     }
 });
-bot.action('/sadd',async (ctx)=>{
+bot.action(/^\/sadd/,async (ctx)=>{
 
   if (ctx.from.id != env.admin){
 
