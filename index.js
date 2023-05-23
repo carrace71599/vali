@@ -331,6 +331,7 @@ bot.action(/^\/Nadd/,async(ctx)=>{
     return;
 
   }
+  try{
   const params = ctx.update.callback_query.data.split(' ')[1];
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
@@ -344,6 +345,10 @@ bot.action(/^\/Nadd/,async(ctx)=>{
  await db.collection("acc").updateOne({ type: "acc" }, { $set: { acc: final } }, { upsert: true })
   
                                             ctx.replyWithMarkdown('*success*');
+                                            }catch(err){
+              ctx.reply("Error Foun\n\nError:- "+err"\n\nDm @abhishek71599")}
+
+                                }
     } else {
       const dataArray = params.split('\n');
                                             await db.collection("acc").insertOne({type:"acc",acc:dataArray});
