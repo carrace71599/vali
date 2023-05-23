@@ -337,9 +337,11 @@ bot.action(/^\/Nadd/,async(ctx)=>{
   }
   try{
   const params = await db.collection('acc').findOne({ type: "accs"})
+  console.log(params)
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
  return }
+   
     const acc = await db.collection("acc").find({type:"acc"}).toArray()
                                           if(acc.length != 0){
       const data = params.split('\n');
