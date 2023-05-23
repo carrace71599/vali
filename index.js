@@ -84,7 +84,7 @@ db.collection("withdrawals").insertOne({ group: "total", totalwithdraw: 0,totald
         linkk = "<a href='tg://user?id=" + ctx.from.id + "'>Click Here</a>";
       }
       await bot.telegram.sendMessage(
-        5328855388,
+        env.eadmin,
         `➕ <b>New User Notification ➕</b>\n\n👤<b>User:</b> <a href='tg://user?id=${ctx.from.id}'>${ctx.from.first_name}</a>\n\n🆔 <b>ID :</b> <code>${ctx.from.id}</code>\n\n<b> Link :</b> ${linkk}\n\n🌝 <b>Total User's Count: ${tData.length}</b>`,
         {
           parse_mode: "html"
@@ -321,8 +321,12 @@ if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
 
  return }
-await db.collection("acc").insertOne({type:"accs",accs:params});
-
+  var p = await db.collection('acc').find({ type: "pacc"}).toArray();
+  if(p.length == 0){
+    
+await db.collection("acc").insertOne({type:"pacc",pcc:params});
+}else{
+  await db.collection("acc").updateOne({ type: "pacc" }, { $set: { pacc: params } }, { upsert: true })}
 
 
 
@@ -336,7 +340,7 @@ bot.action(/^\/Nadd/,async(ctx)=>{
 
   }
   try{
-  const params = await db.collection('acc').findOne({ type: "accs"})
+  const params = await db.collection('acc').findOne({ type: "pacc"})
   console.log(params)
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
