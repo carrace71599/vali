@@ -41,7 +41,8 @@ Comp.action(/^\/confirm/, async (ctx) => {
   let joinCheck = await findUser(ctx);
   if (joinCheck) {
 var params = ctx.update.callback_query.data.split(' ')[1]
-   let b;
+  console.log(params);
+let b;
 if(params == "prime"){
 b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
     if (b[0].balance < 15) {
@@ -93,17 +94,17 @@ b = await db.collection('balance').find({ userId: ctx.from.id }).toArray()
       return
     }
 ctx.replyWithMarkdown("*📧 Kindly Enter Your Email*")
-ctx.scene.enter("getWallet")
+ctx.scene.enter("getMail")
 
-getWallet.enter( async (ctx) => {
+getMail.enter( async (ctx) => {
  
-   getWallet.on("text",async(ctx) =>{
+   getMail.on("text",async(ctx) =>{
       try{
     const msg = ctx.message.text;
 
 if(msg == "/start"){
   await starter(ctx);
-  ctx.scene.leave("getWallet");
+  ctx.scene.leave("getMail");
 return;}
     if (ctx.message.text.length >= 9) {
       
@@ -119,7 +120,7 @@ return;}
         const upbal = parseFloat(b[0].balance - 30)
         
         await db.collection('balance').updateOne({ userId: ctx.from.id }, { $set: { balance: upbal } }, { upsert: true })
-     ctx.scene.leave("getWallet");   
+     ctx.scene.leave("getMail");   
     } else {
       await ctx.replyWithMarkdown("⛔ *Not Valid Email Address* \n_Send /start to Return To The Menu,\nOr Send a Correct Email Address_");}
   }catch (err) {
