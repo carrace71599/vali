@@ -324,9 +324,9 @@ if (!params) {
   var p = await db.collection('acc').find({ type: "pacc"}).toArray();
   if(p.length == 0){
     
-await db.collection("acc").insertOne({type:"pacc",pacc:params});
+await db.collection("acc").insertOne({type:"tacc",tacc:params});
 }else{
-  await db.collection("acc").updateOne({ type: "pacc" }, { $set: { pacc: params } }, { upsert: true })}
+  await db.collection("acc").updateOne({ type: "tacc" }, { $set: { tacc: params } }, { upsert: true })}
 
 
 
@@ -340,8 +340,8 @@ bot.action(/^\/Nadd/,async(ctx)=>{
 
   }
   try{
-  const param = await db.collection('acc').findOne({ type: "pacc"})
-  const params = param[0].pacc
+  const param = await db.collection('acc').findOne({ type: "tacc"})
+  const params = param.tacc
   console.log(param)
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
