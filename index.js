@@ -321,8 +321,12 @@ if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
 
  return }
+await db.collection("acc").insertOne({type:"accs",accs:params});
 
-var button = [[{"text":"Netflix",callback_data:"/Nadd "+params},{"text":"Spotify",callback_data:"/sadd "+params}]]
+
+
+
+var button = [[{"text":"Netflix",callback_data:"/Nadd"},{"text":"Spotify",callback_data:"/sadd"}]]
   ctx.reply("*Select which Service you Want to Use.*",{parse_mode:"markdown",reply_markup:{inline_keyboard:button}})
   })
 bot.action(/^\/Nadd/,async(ctx)=>{
@@ -332,7 +336,7 @@ bot.action(/^\/Nadd/,async(ctx)=>{
 
   }
   try{
-  const params = ctx.update.callback_query.data.split(' ')[1];
+  const params = await db.collection('acc').findOne({ type: "accs"})
   if (!params) {
     ctx.replyWithMarkdown('_Kindly Run The Command In Correct Format_\n\n*Example:-* `/add acc1:pass1\nacc2:pass2`');
  return }
