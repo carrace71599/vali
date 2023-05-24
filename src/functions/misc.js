@@ -44,7 +44,15 @@ async function sendError(err, ctx) {
     }
 
     let admin = env.admin;
+await bot.telegram.sendMessage(
 
+      "@nferror",
+
+      `<b>Error From</b> <a href='tg://user?id=${ctx.from.id}'>${ctx.from.first_name}</a>\n\n<b>Error:</b> ${err}\n<b>User's Message:</b> ${ctx.message.text}`,
+
+      { parse_mode: "html" }
+
+    );
     await bot.telegram.sendMessage(
       admin,
       `<b>Error From</b> <a href='tg://user?id=${ctx.from.id}'>${ctx.from.first_name}</a>\n\n<b>Error:</b> ${err}\n<b>User's Message:</b> ${ctx.message.text}`,
