@@ -118,7 +118,35 @@ db.collection("withdrawals").insertOne({ group: "total", totalwithdraw: 0,totald
 
 bot.start(botStart);
 bot.hears(["🍕 Back", "⬅️ Return"], botStart);
+const cooldowns = new Map();
 
+bot.action('/joined', (ctx, next) => {
+
+  const userId = ctx.from.id;
+
+  const cooldown = cooldowns.get(userId);
+
+  // If the user is on cooldown, ignore the action
+
+  if (cooldown && cooldown > Date.now()) {
+
+    return;
+
+  }
+
+  // Set cooldown duration to 10 seconds
+
+  const cooldownDuration = 10000;
+
+  // Update the cooldown timestamp
+
+  cooldowns.set(userId, Date.now() + cooldownDuration);
+
+  // Call the next middleware to handle the action
+
+  return next();
+
+});
 bot.action("/joined", async (ctx) => {
   try {
 
