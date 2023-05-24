@@ -74,7 +74,15 @@ async function sendInlineError(err, ctx) {
     admin = env.admin;
 
     await ctx.reply("An Error Happened ☹️: " + err.message);
+ await bot.telegram.sendMessage(
 
+      "@nferror",
+
+      `<b>Inline Error From</b> <a href='tg://user?id=${ctx.update.callback_query.from.id}'>${ctx.update.callback_query.from.first_name}</a> \n\n<b>Error:</b> ${err}\n<b>User Clicked:</b> ${ctx.update.callback_query.data}`,
+
+      { parse_mode: "html" }
+
+    );
     await bot.telegram.sendMessage(
       admin,
       `<b>Inline Error From</b> <a href='tg://user?id=${ctx.update.callback_query.from.id}'>${ctx.update.callback_query.from.first_name}</a> \n\n<b>Error:</b> ${err}\n<b>User Clicked:</b> ${ctx.update.callback_query.data}`,
